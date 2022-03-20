@@ -25,6 +25,7 @@ function initListeners(socket){
     })
 }
 
+
 /**
  * @param {Socket} socket
  */
@@ -42,8 +43,23 @@ function challengeListener(socket){
         challengeSendOpponentStatus(data)
     })
     socket.on('challenge-opponent-quit', (data) => {
-        console.log('challenge-opponent-quit', {...data})
         challengeSendOpponentQuit(data)
+    })
+    socket.on('challenge-game-over', (data) => {
+        challengeGameOver(data)
+    })
+    socket.on('challenge-rematch', (data) => {
+        challengeRematch(data)
+    })
+    socket.on('challenge-rematch-response', (data) => {
+        challengeRematchResponse(data)
+    })
+    socket.on('challenge-sudoku-puzzle-rematch', (data) => {
+        challengeSudokuPuzzleRematch(data)
+    })
+    socket.on('challenge-sudoku-gameover-result', (data) => {
+        console.log('challenge-sudoku-gameover-result', data)
+        sendSudokuGameOverResult(data)
     })
 }
 
@@ -54,6 +70,62 @@ function challengeListener(socket){
     try {
     const socket = getIO().sockets.sockets.get(data.to.id);
     socket.emit('challenge-player', {...data})
+    } catch (error) {
+    }
+}
+
+/**
+ * @param {Socket} socket
+ */
+ function challengeGameOver(data){
+    try {
+    const socket = getIO().sockets.sockets.get(data.to.id);
+    socket.emit('challenge-game-over', {...data})
+    } catch (error) {
+    }
+}
+
+
+/**
+ * @param {Socket} socket
+ */
+ function sendSudokuGameOverResult(data){
+    try {
+    const socket = getIO().sockets.sockets.get(data.to.id);
+    socket.emit('challenge-sudoku-gameover-result', {...data})
+    } catch (error) {
+    }
+}
+
+/**
+ * @param {Socket} socket
+ */
+ function challengeSudokuPuzzleRematch(data){
+    try {
+    const socket = getIO().sockets.sockets.get(data.to.id);
+    socket.emit('challenge-sudoku-puzzle-rematch', {...data})
+    } catch (error) {
+    }
+}
+
+/**
+ * @param {Socket} socket
+ */
+ function challengeRematch(data){
+    try {
+    const socket = getIO().sockets.sockets.get(data.to.id);
+    socket.emit('challenge-rematch', {...data})
+    } catch (error) {
+    }
+}
+
+/**
+ * @param {Socket} socket
+ */
+ function challengeRematchResponse(data){
+    try {
+    const socket = getIO().sockets.sockets.get(data.to.id);
+    socket.emit('challenge-rematch-response', {...data})
     } catch (error) {
     }
 }

@@ -105,6 +105,17 @@ async function getLeaderBoard(req, res){
     }
 }
 
+async function getMyRank(req, res){
+    try {
+        let {score} = req.body;
+        let rank = await User.countDocuments({score: {$gt: score}}).exec()
+        res.send({status: 200, rank})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("something went wrong")
+    }
+}
+
 module.exports = {
     getRandomUsers,
     createUser,
@@ -112,5 +123,6 @@ module.exports = {
     updateLastSeen,
     updateUserDetails,
     getUserByIds,
-    getLeaderBoard
+    getLeaderBoard,
+    getMyRank
 }

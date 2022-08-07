@@ -4,6 +4,7 @@ var router = express.Router();
 var userRouter = require("./users");
 var gameRouter = require("./game");
 var puzzleRouter = require("./puzzle");
+var statsRouter = require("./stats");
 
 var startDate = new Date();
 
@@ -14,5 +15,6 @@ router.get("/", function (req, res) {
 router.use("/users", userRouter);
 router.use("/game", gameRouter);
 router.use("/puzzle", puzzleRouter);
+router.use("/stats", statsRouter);
 
 module.exports = router;

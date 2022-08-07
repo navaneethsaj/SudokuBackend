@@ -58,7 +58,6 @@ async function myBeatingRatio(req, res) {
 async function timeStats(req, res) {
   try {
     let { id } = req.params;
-    console.log(id);
     let submission_instance = await Submission.aggregate([
       { $match: { userId: ObjectId(id) } },
       {
@@ -76,9 +75,44 @@ async function timeStats(req, res) {
   }
 }
 
+async function puzzleStats(req, res) {
+  try {
+    let { id } = req.params;
+    console.log(id);
+    let solution_instance = await Submission.aggregate([
+      {
+        $match: {
+          puzzleId: ObjectId(id),
+        },
+      },
+      {
+        $group: {
+          _id: "$solved",
+          articleCount: { $sum: 1 },
+        },
+      },
+    ]);
+    let time_instance = await Submission.aggregate([
+      { $match: { puzzleId: ObjectId(id) } },
+      {
+        $group: {
+          _id: "$puzzleId",
+          average: { $avg: "$timeElapsed" },
+          sum: { $sum: "$timeElapsed" },
+        },
+      },
+    ]);
+    res.status(200).send({ status: 200, solution_instance, time_instance });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something went wrong");
+  }
+}
+
 module.exports = {
   successRatio,
   allPlayerSuccessRatio,
   myBeatingRatio,
   timeStats,
+  puzzleStats,
 };

@@ -109,10 +109,21 @@ async function puzzleStats(req, res) {
   }
 }
 
+async function countUsers(req, res) {
+  try {
+    let users = await User.countDocuments({});
+    res.status(200).send({ status: 200, users });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something went wrong");
+  }
+}
+
 module.exports = {
   successRatio,
   allPlayerSuccessRatio,
   myBeatingRatio,
   timeStats,
   puzzleStats,
+  countUsers,
 };

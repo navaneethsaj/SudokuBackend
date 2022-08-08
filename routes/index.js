@@ -5,6 +5,7 @@ var userRouter = require("./users");
 var gameRouter = require("./game");
 var puzzleRouter = require("./puzzle");
 var statsRouter = require("./stats");
+var featuredRouter = require("./featured");
 
 var startDate = new Date();
 
@@ -16,5 +17,6 @@ router.use("/users", userRouter);
 router.use("/game", gameRouter);
 router.use("/puzzle", puzzleRouter);
 router.use("/stats", statsRouter);
+router.use("/featured", featuredRouter);
 
 module.exports = router;

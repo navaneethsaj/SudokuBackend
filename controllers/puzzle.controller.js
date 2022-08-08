@@ -126,6 +126,39 @@ async function createSubmission(req, res) {
   }
 }
 
+async function getMySubmissions(req, res) {
+  try {
+    let { id } = req.params;
+    let submission_instance = await Submission.find({ userId: ObjectId(id) });
+    res.status(200).send({ status: 200, submission_instance });
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(200).send({ status: 200, message: "Already have submission" });
+      return;
+    }
+    console.log(error.code, error);
+    res.status(500).send("something went wrong");
+  }
+}
+
+async function checkIfSubmitted(req, res) {
+  try {
+    let { userId, puzzleId } = req.params;
+    let submission_instance = await Submission.find({
+      userId: ObjectId(userId),
+      puzzleId: ObjectId(puzzleId),
+    });
+    res.status(200).send({ status: 200, submission_instance });
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(200).send({ status: 200, message: "Already have submission" });
+      return;
+    }
+    console.log(error.code, error);
+    res.status(500).send("something went wrong");
+  }
+}
+
 module.exports = {
   createPuzzle,
   getLatestPuzzle,
@@ -133,4 +166,6 @@ module.exports = {
   getSubmission,
   getWeeklyTrending,
   createSubmission,
+  getMySubmissions,
+  checkIfSubmitted,
 };

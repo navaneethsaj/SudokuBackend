@@ -139,6 +139,17 @@ async function getTopPlayer(req, res) {
   }
 }
 
+async function getUserName(req, res) {
+  try {
+    let { id } = req.params;
+    let user = await User.findOne({ _id: ObjectId(id) });
+    res.send({ status: 200, user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something went wrong");
+  }
+}
+
 module.exports = {
   getRandomUsers,
   createUser,
@@ -149,4 +160,5 @@ module.exports = {
   getLeaderBoard,
   getMyRank,
   getTopPlayer,
+  getUserName,
 };

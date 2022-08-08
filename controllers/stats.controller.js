@@ -119,6 +119,33 @@ async function countUsers(req, res) {
   }
 }
 
+async function puzzleTimeStats(req, res) {
+  try {
+    let { id } = req.params;
+    console.log(id);
+    let time_instance = await Submission.aggregate([
+      {
+        $match: {
+          puzzleId: ObjectId(id),
+          solved: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // collection name in db
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ]);
+    res.status(200).send({ status: 200, time_instance });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something went wrong");
+  }
+}
+
 module.exports = {
   successRatio,
   allPlayerSuccessRatio,
@@ -126,4 +153,5 @@ module.exports = {
   timeStats,
   puzzleStats,
   countUsers,
+  puzzleTimeStats,
 };

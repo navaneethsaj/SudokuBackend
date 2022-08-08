@@ -11,6 +11,7 @@ const {
   getLeaderBoard,
   getMyRank,
   getTopPlayer,
+  getUserName,
 } = require("../controllers/user.controller");
 var router = express.Router();
 
@@ -23,5 +24,6 @@ router.post("/getuserbyids", getUserByIds);
 router.post("/getleaderboard", getLeaderBoard);
 router.post("/getmyrank", getMyRank);
 router.get("/gettopplayer", getTopPlayer);
+router.get("/getusername/:id", getUserName);
 
 module.exports = router;

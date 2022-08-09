@@ -132,10 +132,6 @@ async function getMySubmissions(req, res) {
     let submission_instance = await Submission.find({ userId: ObjectId(id) });
     res.status(200).send({ status: 200, submission_instance });
   } catch (error) {
-    if (error.code === 11000) {
-      res.status(200).send({ status: 200, message: "Already have submission" });
-      return;
-    }
     console.log(error.code, error);
     res.status(500).send("something went wrong");
   }
@@ -150,10 +146,6 @@ async function checkIfSubmitted(req, res) {
     });
     res.status(200).send({ status: 200, submission_instance });
   } catch (error) {
-    if (error.code === 11000) {
-      res.status(200).send({ status: 200, message: "Already have submission" });
-      return;
-    }
     console.log(error.code, error);
     res.status(500).send("something went wrong");
   }

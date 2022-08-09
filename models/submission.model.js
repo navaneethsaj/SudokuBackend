@@ -13,6 +13,10 @@ SubmissionSchema.index({ puzzleId: 1, userId: 1 }, { unique: true });
 
 const Submission = mongoose.model("Submission", SubmissionSchema);
 
-Submission.syncIndexes();
+try {
+  Submission.syncIndexes();
+} catch (error) {
+  console.log("Index Build Failed Submission Model", error);
+}
 
 module.exports = Submission;

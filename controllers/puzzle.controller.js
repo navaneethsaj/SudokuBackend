@@ -31,7 +31,7 @@ async function getLatestPuzzle(req, res) {
       createdOn: { $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) },
     })
       .sort({ lastPlayedOn: -1 })
-      .limit(200);
+      .limit(30);
     res.status(200).send({ status: 200, puzzles });
   } catch (error) {
     console.log(error);

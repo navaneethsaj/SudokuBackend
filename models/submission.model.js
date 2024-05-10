@@ -5,7 +5,7 @@ const SubmissionSchema = new mongoose.Schema({
   puzzleId: { type: Object, required: true },
   userId: { type: ObjectId, required: true },
   timeElapsed: { type: Number, required: true, default: 0 },
-  createdOn: { type: Date, default: new Date() },
+  createdOn: { type: Date, default: Date.now },
   solved: { type: Boolean, required: true, default: false },
 });
 
